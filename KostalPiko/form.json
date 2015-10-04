@@ -1,11 +1,11 @@
-{
+{	
 	"elements":
 	[
-		{ "name": "streetName", "type": "ValidationTextBox", "caption": "Strassenname" },
-		{ "name": "streetNumber", "type": "ValidationTextBox", "caption": "Hausnummer" }
+		{ "name": "url", "type": "ValidationTextBox", "caption": "URL: (http://pvserver:pvwr@ip-address" },
+		{ "name": "refresh", "type": "ValidationTextBox", "caption": "Refreshtime (seconds)" }
 	],
 	"actions":
 	[
-		{ "type": "Button", "label": "Update", "onClick": "EL_RequestInfo($id);" }
+		{ "type": "Button", "label": "Update", "onClick": "KP_RequestInfo($id);" }
 	]	
 }
