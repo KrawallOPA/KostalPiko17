@@ -16,22 +16,22 @@
 			//Never delete this line!
 			parent::ApplyChanges();
 			
-			$this->RegisterVariableFloat("ACLeistungAktuell", "AC Leistung Aktuell", "~UnixTimestamp");
-			$this->RegisterVariableString("ACLeistungStatus", "AC Leistung Status", "~UnixTimestamp");
-			$this->RegisterVariableFloat("Gesamtertrag", "Gesamtertrag", "~UnixTimestamp");
-                        $this->RegisterVariableFloat("Tagesertrag", "Tagesertrag", "~UnixTimestamp");
-                        $this->RegisterVariableFloat("SpannungString1", "Spannung String 1", "~UnixTimestamp");
+			$this->RegisterVariableFloat("ACLeistungAktuell", "AC Leistung Aktuell", "~Watt");
+			$this->RegisterVariableString("ACLeistungStatus", "AC Leistung Status", "~String");
+			$this->RegisterVariableFloat("Gesamtertrag", "Gesamtertrag", "~Electricity");
+                        $this->RegisterVariableFloat("Tagesertrag", "Tagesertrag", "~Electricity");			
+                        $this->RegisterVariableFloat("SpannungString1", "Spannung String 1", "~Volt");
                         $this->RegisterVariableFloat("L1Spannung", "L1 Spannung", "~UnixTimestamp");
-                        $this->RegisterVariableFloat("StromString1", "Strom String 1", "~UnixTimestamp");
-                        $this->RegisterVariableFloat("L1Leistung", "L1 Leistung", "~UnixTimestamp");
-                        $this->RegisterVariableFloat("SpannungString2", "Spannung String 2", "~UnixTimestamp");
+                        $this->RegisterVariableFloat("StromString1", "Strom String 1", "~Ampere");
+                        $this->RegisterVariableFloat("L1Leistung", "L1 Leistung", "~Watt");
+                        $this->RegisterVariableFloat("SpannungString2", "Spannung String 2", "~Volt");
                         $this->RegisterVariableFloat("L2Spannung", "L2 Spannung", "~UnixTimestamp");
-                        $this->RegisterVariableFloat("StromString2", "Strom String 2", "~UnixTimestamp");
-                        $this->RegisterVariableFloat("L2Leistung", "L2 Leistung", "~UnixTimestamp");
-                        $this->RegisterVariableFloat("SpannungString3", "Spannung String 3", "~UnixTimestamp");
-                        $this->RegisterVariableFloat("L3Spannung", "L3 Spannung", "~UnixTimestamp");
-                        $this->RegisterVariableFloat("StromString3", "Strom String 3", "~UnixTimestamp");
-                        $this->RegisterVariableFloat("L3Leistung", "L3 Leistung", "~UnixTimestamp");                      
+                        $this->RegisterVariableFloat("StromString2", "Strom String 2", "~Ampere");
+                        $this->RegisterVariableFloat("L2Leistung", "L2 Leistung", "~Watt");
+                        $this->RegisterVariableFloat("SpannungString3", "Spannung String 3", "~Volt");
+                        $this->RegisterVariableFloat("L3Spannung", "L3 Spannung", "~Volt");
+                        $this->RegisterVariableFloat("StromString3", "Strom String 3", "~Ampere");
+                        $this->RegisterVariableFloat("L3Leistung", "L3 Leistung", "~Watt");                      
 		}
 	
 		/**
@@ -72,8 +72,109 @@
                         $data1 = (float) $data;
                         SetValue($this->GetIDForIdent("Gesamtertrag"), $data1);
                         
+                        //Energie_Tagesertrag_Aktuell
+
+                        $pos1 = strpos($Ausgabe,"Tagesenergie</td>");
+                        $pos2 = strpos($Ausgabe,"</td>",$pos1+20);
+                        $data = substr($Ausgabe,($pos1+70),$pos2-$pos1-70);
+                        $data1 = (float) $data;
+                        SetValue($this->GetIDForIdent("Tagesertrag"), $data1);
                         
-                                        
+                        //PV_Generator_String1_Spannung
+
+                        $pos1 = strpos($Ausgabe,"Spannung</td>",$pos2);
+                        $pos2 = strpos($Ausgabe,"</td>",$pos1+20);
+                        $data = substr($Ausgabe,($pos1+66),$pos2-$pos1-66);
+                        $data1 = (float) $data;
+                        SetValue($this->GetIDForIdent("SpannungString1"), $data1);
+                        
+                        //Ausgangsleistung_L1_Spannung
+
+                        $pos1 = strpos($Ausgabe,"Spannung</td>",$pos2);
+                        $pos2 = strpos($Ausgabe,"</td>",$pos1+20);
+                        $data = substr($Ausgabe,($pos1+66),$pos2-$pos1-66);
+                        $data1 = (float) $data;
+                        SetValue($this->GetIDForIdent("L1Spannung"), $data1);
+                              
+                        //PV_Generator_String1_Strom
+
+                        $pos1 = strpos($Ausgabe,"Strom</td>",$pos2);
+                        $pos2 = strpos($Ausgabe,"</td>",$pos1+20);
+                        $data = substr($Ausgabe,($pos1+63),$pos2-$pos1-63);
+                        $data1 = (float) $data;
+                        SetValue($this->GetIDForIdent("StromString1"), $data1);
+                        
+                        //Ausgangsleistung_L1_Leistung
+
+                        $pos1 = strpos($Ausgabe,"Leistung</td>",$pos2);
+                        $pos2 = strpos($Ausgabe,"</td>",$pos1+20);
+                        $data = substr($Ausgabe,($pos1+66),$pos2-$pos1-66);
+                        $data1 = (float) $data;
+                        SetValue($this->GetIDForIdent("L1Leistung"), $data1);
+                        
+                        //PV_Generator_String2_Spannung
+
+                        $pos1 = strpos($Ausgabe,"Spannung</td>",$pos2);
+                        $pos2 = strpos($Ausgabe,"</td>",$pos1+20);
+                        $data = substr($Ausgabe,($pos1+66),$pos2-$pos1-66);
+                        $data1 = (float) $data;
+                        SetValue($this->GetIDForIdent("SpannungString2"), $data1);
+                        
+                        //Ausgangsleistung_L2_Spannung
+
+                        $pos1 = strpos($Ausgabe,"Spannung</td>",$pos2);
+                        $pos2 = strpos($Ausgabe,"</td>",$pos1+20);
+                        $data = substr($Ausgabe,($pos1+66),$pos2-$pos1-66);
+                        $data1 = (float) $data;
+                        SetValue($this->GetIDForIdent("L2Spannung"), $data1);
+                        
+                        //PV_Generator_String2_Strom
+
+                        $pos1 = strpos($Ausgabe,"Strom</td>",$pos2);
+                        $pos2 = strpos($Ausgabe,"</td>",$pos1+20);
+                        $data = substr($Ausgabe,($pos1+63),$pos2-$pos1-63);
+                        $data1 = (float) $data;
+                        SetValue($this->GetIDForIdent("StromString2"), $data1);
+                        
+                        //Ausgangsleistung_L2_Leistung
+
+                        $pos1 = strpos($Ausgabe,"Leistung</td>",$pos2);
+                        $pos2 = strpos($Ausgabe,"</td>",$pos1+20);
+                        $data = substr($Ausgabe,($pos1+66),$pos2-$pos1-66);
+                        $data1 = (float) $data;
+                        SetValue($this->GetIDForIdent("L2Leistung"), $data1);
+                        
+                        //PV_Generator_String3_Spannung
+
+                        $pos1 = strpos($Ausgabe,"Spannung</td>",$pos2);
+                        $pos2 = strpos($Ausgabe,"</td>",$pos1+20);
+                        $data = substr($Ausgabe,($pos1+66),$pos2-$pos1-66);
+                        $data1 = (float) $data;
+                        SetValue($this->GetIDForIdent("SpannungString3"), $data1);
+                        
+                        //Ausgangsleistung_L3_Spannung
+
+                        $pos1 = strpos($Ausgabe,"Spannung</td>",$pos2);
+                        $pos2 = strpos($Ausgabe,"</td>",$pos1+20);
+                        $data = substr($Ausgabe,($pos1+66),$pos2-$pos1-66);
+                        $data1 = (float) $data;
+                        SetValue($this->GetIDForIdent("L3Spannung"), $data1);
+                        
+                        //PV_Generator_String3_Strom
+
+                        $pos1 = strpos($Ausgabe,"Strom</td>",$pos2);
+                        $pos2 = strpos($Ausgabe,"</td>",$pos1+20);
+                        $data = substr($Ausgabe,($pos1+63),$pos2-$pos1-63);
+                        $data1 = (float) $data;
+                        SetValue($this->GetIDForIdent("StromString3"), $data1);
+                        
+                        //Ausgangsleistung_L3_Leistung
+
+                        $pos1 = strpos($Ausgabe,"Leistung</td>",$pos2);
+                        $pos2 = strpos($Ausgabe,"</td>",$pos1+20);
+                        $data = substr($Ausgabe,($pos1+66),$pos2-$pos1-66);
+                        $data1 = (float) $data;
+                        SetValue($this->GetIDForIdent("L3Leistung"), $data1);                       
                 }   	
 	
 	}

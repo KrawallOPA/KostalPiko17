@@ -1,8 +1,8 @@
 {	
 	"elements":
 	[
-		{ "name": "url", "type": "ValidationTextBox", "caption": "URL: (http://pvserver:pvwr@ip-address" },
-		{ "name": "refresh", "type": "ValidationTextBox", "caption": "Refreshtime (seconds)" }
+		{ "name": "url", "type": "ValidationTextBox", "caption": "URL:" },
+		{ "name": "refresh", "type": "ValidationTextBox", "caption": "Refreshtime(s)" }
 	],
 	"actions":
 	[
