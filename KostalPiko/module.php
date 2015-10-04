@@ -21,11 +21,11 @@
 			$this->RegisterVariableFloat("Gesamtertrag", "Gesamtertrag", "~Electricity");
                         $this->RegisterVariableFloat("Tagesertrag", "Tagesertrag", "~Electricity");			
                         $this->RegisterVariableFloat("SpannungString1", "Spannung String 1", "~Volt");
-                        $this->RegisterVariableFloat("L1Spannung", "L1 Spannung", "~UnixTimestamp");
+                        $this->RegisterVariableFloat("L1Spannung", "L1 Spannung", "~Volt");
                         $this->RegisterVariableFloat("StromString1", "Strom String 1", "~Ampere");
                         $this->RegisterVariableFloat("L1Leistung", "L1 Leistung", "~Watt.3680");
                         $this->RegisterVariableFloat("SpannungString2", "Spannung String 2", "~Volt");
-                        $this->RegisterVariableFloat("L2Spannung", "L2 Spannung", "~UnixTimestamp");
+                        $this->RegisterVariableFloat("L2Spannung", "L2 Spannung", "~Volt");
                         $this->RegisterVariableFloat("StromString2", "Strom String 2", "~Ampere");
                         $this->RegisterVariableFloat("L2Leistung", "L2 Leistung", "~Watt.3680");
                         $this->RegisterVariableFloat("SpannungString3", "Spannung String 3", "~Volt");
