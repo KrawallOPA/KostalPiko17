@@ -1,0 +1,14 @@
+{
+	"id": "{50820123-CAA1-4AF2-99C1-C69D0ED80C69}",
+	"name": "KostalPiko",
+	"type": 3,
+	"vendor": "",
+	"aliases": 
+	[
+		"KostalPiko"
+	],	
+	"parentRequirements": [],
+	"childRequirements": [],
+	"implemented": [],
+	"prefix": "KP"
+}
