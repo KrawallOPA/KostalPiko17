@@ -5,11 +5,11 @@
 		{ "type": "Label", "label": "Intervall für die Aktualisierung aller Daten:" },
                 { "type": "IntervalBox", "name": "Intervall", "caption": "Sekunden" },
                 { "type": "Label", "label": "Intervall beginnend um hh:mm Uhr" },
-                { "type": "IntervalBox", "name": "startzeit_h", "caption": "Stunden" },
-                { "type": "IntervalBox", "name": "startzeit_m", "caption": "Minuten" },
+                { "type": "IntervalBox", "name": "startzeith", "caption": "Stunden" },
+                { "type": "IntervalBox", "name": "startzeitm", "caption": "Minuten" },
                 { "type": "Label", "label": "Intervall endend um hh:mm Uhr" },
-                { "type": "IntervalBox", "name": "stopzeit_h", "caption": "Stunden" },
-                { "type": "IntervalBox", "name": "stopzeit_m", "caption": "Minuten" }
+                { "type": "IntervalBox", "name": "stopzeith", "caption": "Stunden" },
+                { "type": "IntervalBox", "name": "stopzeitm", "caption": "Minuten" }
 	],
 	"actions":
 	[
