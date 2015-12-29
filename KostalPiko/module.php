@@ -252,8 +252,8 @@ protected function RegisterTimer($Name, $Interval, $Script)
         {
             if ($Event['CyclicTimeValue'] <> $Interval)
                 IPS_SetEventCyclic($id, 0, 0, 0, 0, 1, $Interval);
-                //IPS_SetEventCyclicTimeFrom($id, $startzeit_h, $startzeit_m, 0);
-                //IPS_SetEventCyclicTimeTo($id, $stopzeit_h, $stopzeit_m, 0);
+                IPS_SetEventCyclicTimeFrom($id, $startzeit_h, $startzeit_m, 0);
+                IPS_SetEventCyclicTimeTo($id, $stopzeit_h, $stopzeit_m, 0);
             if (!$Event['EventActive'])
                 IPS_SetEventActive($id, true);
         }
