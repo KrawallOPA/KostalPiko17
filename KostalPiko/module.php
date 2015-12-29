@@ -46,8 +46,8 @@ class KostalPiko extends IPSModule
                         $this->RegisterVariableFloat("StromString3", "Strom String 3", "~Ampere");
                         $this->RegisterVariableFloat("L3Leistung", "L3 Leistung", "~Watt.3680");
                         $this->RequestInfo();
-                        //$this->SetTimerInterval("ReadKostalPiko", $this->ReadPropertyInteger("Intervall"));
-                        $this->SetTimerInterval("ReadKostalPiko", $this->ReadPropertyInteger("Intervall"), $this->ReadPropertyInteger("startzeith"), $this->ReadPropertyInteger("startzeitm"), $this->ReadPropertyInteger("stopzeith"), $this->ReadPropertyInteger("stopzeitm"));
+                        $this->SetTimerInterval("ReadKostalPiko", $this->ReadPropertyInteger("Intervall"));
+                        $this->SetTimerIntervalTime("ReadKostalPiko", $this->ReadPropertyInteger("startzeith"), $this->ReadPropertyInteger("startzeitm"), $this->ReadPropertyInteger("stopzeith"), $this->ReadPropertyInteger("stopzeitm"));
 		}
 	
 		/**
@@ -238,7 +238,7 @@ protected function RegisterTimer($Name, $Interval, $Script)
         }
     }
     
-    protected function SetTimerInterval($Name, $Interval, $startzeith, $startzeitm)
+    protected function SetTimerInterval($Name, $Interval)
     {
         $id = @IPS_GetObjectIDByIdent($Name, $this->InstanceID);
         if ($id === false)
@@ -255,11 +255,29 @@ protected function RegisterTimer($Name, $Interval, $Script)
         {
             if ($Event['CyclicTimeValue'] <> $Interval)
                 IPS_SetEventCyclic($id, 0, 0, 0, 2, 2, $Interval);
-                IPS_SetEventCyclicTimeFrom($id, $startzeith, $startzeitm, 0);
-                //IPS_SetEventCyclicTimeTo($id, $stopzeith, $stopzeitm, 0);
             if (!$Event['EventActive'])
                 IPS_SetEventActive($id, true);
         }
+    }
+    
+    protected function SetTimerIntervalTime($Name, $startzeith, $startzeitm, $stopzeith, $stopzeitm)
+    {
+        $id = @IPS_GetObjectIDByIdent($Name, $this->InstanceID);
+        if ($id === false)
+            throw new Exception('Timer not present', E_USER_WARNING);
+        if (!IPS_EventExists($id))
+            throw new Exception('Timer not present', E_USER_WARNING);
+        $Event = IPS_GetEvent($id);
+        if ($startzeith > 23)
+            {
+                if ($Event['EventActive'])
+                    IPS_SetEventActive($id, false);
+            }
+        else
+            {
+                IPS_SetEventCyclicTimeFrom($id, $startzeith, $startzeitm, 0);
+                IPS_SetEventCyclicTimeTo($id, $stopzeith, $stopzeitm, 0);
+            }
     }
 }
 ?>
