@@ -46,7 +46,8 @@ class KostalPiko extends IPSModule
                         $this->RegisterVariableFloat("StromString3", "Strom String 3", "~Ampere");
                         $this->RegisterVariableFloat("L3Leistung", "L3 Leistung", "~Watt.3680");
                         $this->RequestInfo();
-                        $this->SetTimerInterval("ReadKostalPiko", $this->ReadPropertyInteger("Intervall"), $this->ReadPropertyInteger("startzeit_h"), $this->ReadPropertyInteger("startzeit_m"), $this->ReadPropertyInteger("stopzeit_h"), $this->ReadPropertyInteger("stopzeit_m"));
+                        $this->SetTimerInterval("ReadKostalPiko", $this->ReadPropertyInteger("Intervall"));
+                        //$this->SetTimerInterval("ReadKostalPiko", $this->ReadPropertyInteger("Intervall"), $this->ReadPropertyInteger("startzeit_h"), $this->ReadPropertyInteger("startzeit_m"), $this->ReadPropertyInteger("stopzeit_h"), $this->ReadPropertyInteger("stopzeit_m"));
 		}
 	
 		/**
