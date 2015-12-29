@@ -2,7 +2,8 @@
 	"elements":
 	[
 		{ "name": "url", "type": "ValidationTextBox", "caption": "URL:" },
-		{ "name": "refresh", "type": "ValidationTextBox", "caption": "Refreshtime(s)" }
+		{ "type": "Label", "label": "Intervall für die Aktualisierung aller Daten:" },
+                { "type": "IntervalBox", "name": "Intervall", "caption": "Sekunden" }
 	],
 	"actions":
 	[

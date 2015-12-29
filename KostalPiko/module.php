@@ -7,9 +7,18 @@
 			parent::Create();
 			
 			$this->RegisterPropertyString("url", "http://pvserver:pvwr@192.168.178.60");
-			$this->RegisterPropertyString("refresh", "60");
+			$this->RegisterPropertyInteger("Intervall", 3600);
+                        $this->RegisterTimer("ReadKostalPiko", 0, 'KP_RequestInfo($_IPS[\'TARGET\']);');
 			
-		}		
+		}
+                
+                public function Destroy()
+                {
+                        $this->UnregisterTimer("ReadKostalPiko");
+        
+                        //Never delete this line!
+                        parent::Destroy();
+                }
 	
 		public function ApplyChanges()
 		{
@@ -31,7 +40,9 @@
                         $this->RegisterVariableFloat("SpannungString3", "Spannung String 3", "~Volt");
                         $this->RegisterVariableFloat("L3Spannung", "L3 Spannung", "~Volt");
                         $this->RegisterVariableFloat("StromString3", "Strom String 3", "~Ampere");
-                        $this->RegisterVariableFloat("L3Leistung", "L3 Leistung", "~Watt.3680");                      
+                        $this->RegisterVariableFloat("L3Leistung", "L3 Leistung", "~Watt.3680");
+                        $this->RequestInfo();
+                        $this->SetTimerInterval("ReadKostalPiko", $this->ReadPropertyInteger("Intervall"));
 		}
 	
 		/**
@@ -175,7 +186,73 @@
                         $data = substr($Ausgabe,($pos1+66),$pos2-$pos1-66);
                         $data1 = (float) $data;
                         SetValue($this->GetIDForIdent("L3Leistung"), $data1);                       
-                }   	
+                }
+
+    protected function RegisterTimer($Name, $Interval, $Script)
+    {
+        $id = @IPS_GetObjectIDByIdent($Name, $this->InstanceID);
+        if ($id === false)
+            $id = 0;
+        if ($id > 0)
+        {
+            if (!IPS_EventExists($id))
+                throw new Exception("Ident with name " . $Name . " is used for wrong object type", E_USER_WARNING);
+            if (IPS_GetEvent($id)['EventType'] <> 1)
+            {
+                IPS_DeleteEvent($id);
+                $id = 0;
+            }
+        }
+        if ($id == 0)
+        {
+            $id = IPS_CreateEvent(1);
+            IPS_SetParent($id, $this->InstanceID);
+            IPS_SetIdent($id, $Name);
+        }
+        IPS_SetName($id, $Name);
+        IPS_SetHidden($id, true);
+        IPS_SetEventScript($id, $Script);
+        if ($Interval > 0)
+        {
+            IPS_SetEventCyclic($id, 0, 0, 0, 0, 1, $Interval);
+            IPS_SetEventActive($id, true);
+        } else
+        {
+            IPS_SetEventCyclic($id, 0, 0, 0, 0, 1, 1);
+            IPS_SetEventActive($id, false);
+        }
+    }
+    protected function UnregisterTimer($Name)
+    {
+        $id = @IPS_GetObjectIDByIdent($Name, $this->InstanceID);
+        if ($id > 0)
+        {
+            if (!IPS_EventExists($id))
+                throw new Exception('Timer not present', E_USER_NOTICE);
+            IPS_DeleteEvent($id);
+        }
+    }
+    protected function SetTimerInterval($Name, $Interval)
+    {
+        $id = @IPS_GetObjectIDByIdent($Name, $this->InstanceID);
+        if ($id === false)
+            throw new Exception('Timer not present', E_USER_WARNING);
+        if (!IPS_EventExists($id))
+            throw new Exception('Timer not present', E_USER_WARNING);
+        $Event = IPS_GetEvent($id);
+        if ($Interval < 1)
+        {
+            if ($Event['EventActive'])
+                IPS_SetEventActive($id, false);
+        }
+        else
+        {
+            if ($Event['CyclicTimeValue'] <> $Interval)
+                IPS_SetEventCyclic($id, 0, 0, 0, 0, 1, $Interval);
+            if (!$Event['EventActive'])
+                IPS_SetEventActive($id, true);
+        }
+    }
 	
 	}
 ?>
