@@ -238,7 +238,7 @@ protected function RegisterTimer($Name, $Interval, $Script)
         }
     }
     
-    protected function SetTimerInterval($Name, $Interval, $startzeith, $startzeitm, $stopzeith, $stopzeitm)
+    protected function SetTimerInterval($Name, $Interval)
     {
         $id = @IPS_GetObjectIDByIdent($Name, $this->InstanceID);
         if ($id === false)
