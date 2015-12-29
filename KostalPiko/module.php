@@ -8,6 +8,10 @@ class KostalPiko extends IPSModule
 			
 			$this->RegisterPropertyString("url", "http://pvserver:pvwr@192.168.178.60");
 			$this->RegisterPropertyInteger("Intervall", 3600);
+                        $this->RegisterPropertyInteger("startzeit_h", 05);
+                        $this->RegisterPropertyInteger("startzeit_m", 00);
+                        $this->RegisterPropertyInteger("stopzeit_h", 22);
+                        $this->RegisterPropertyInteger("stopzeit_m", 30);                        
                         $this->RegisterTimer("ReadKostalPiko", 0, 'KP_RequestInfo($_IPS[\'TARGET\']);');
 			
 		}
@@ -42,7 +46,7 @@ class KostalPiko extends IPSModule
                         $this->RegisterVariableFloat("StromString3", "Strom String 3", "~Ampere");
                         $this->RegisterVariableFloat("L3Leistung", "L3 Leistung", "~Watt.3680");
                         $this->RequestInfo();
-                        $this->SetTimerInterval("ReadKostalPiko", $this->ReadPropertyInteger("Intervall"));
+                        $this->SetTimerInterval("ReadKostalPiko", $this->ReadPropertyInteger("Intervall"), $this->ReadPropertyInteger("startzeit_h"), $this->ReadPropertyInteger("startzeit_m"), $this->ReadPropertyInteger("stopzeit_h"), $this->ReadPropertyInteger("stopzeit_m"));
 		}
 	
 		/**
@@ -231,7 +235,7 @@ protected function RegisterTimer($Name, $Interval, $Script)
             IPS_DeleteEvent($id);
         }
     }
-    protected function SetTimerInterval($Name, $Interval)
+    protected function SetTimerInterval($Name, $Interval, $startzeit_h, $startzeit_m, $stopzeit_h, $stopzeit_m)
     {
         $id = @IPS_GetObjectIDByIdent($Name, $this->InstanceID);
         if ($id === false)
@@ -248,6 +252,8 @@ protected function RegisterTimer($Name, $Interval, $Script)
         {
             if ($Event['CyclicTimeValue'] <> $Interval)
                 IPS_SetEventCyclic($id, 0, 0, 0, 0, 1, $Interval);
+                IPS_SetEventCyclicTimeFrom($id, $startzeit_h, $startzeit_m, 0);
+                IPS_SetEventCyclicTimeTo($id, $stopzeit_h, $stopzeit_m, 0);
             if (!$Event['EventActive'])
                 IPS_SetEventActive($id, true);
         }
