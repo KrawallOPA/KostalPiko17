@@ -1,6 +1,6 @@
-<?
-	class KostalPiko extends IPSModule
-	{
+<?php
+class KostalPiko extends IPSModule
+{
 		public function Create()
 		{
 			//Never delete this line!
@@ -187,8 +187,8 @@
                         $data1 = (float) $data;
                         SetValue($this->GetIDForIdent("L3Leistung"), $data1);                       
                 }
-
-    protected function RegisterTimer($Name, $Interval, $Script)
+                
+protected function RegisterTimer($Name, $Interval, $Script)
     {
         $id = @IPS_GetObjectIDByIdent($Name, $this->InstanceID);
         if ($id === false)
@@ -253,6 +253,5 @@
                 IPS_SetEventActive($id, true);
         }
     }
-	
-	}
+}
 ?>
