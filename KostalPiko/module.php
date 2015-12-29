@@ -217,11 +217,11 @@ protected function RegisterTimer($Name, $Interval, $Script)
         IPS_SetEventScript($id, $Script);
         if ($Interval > 0)
         {
-            IPS_SetEventCyclic($id, 1, 0, 0, 0, 1, $Interval);
+            IPS_SetEventCyclic($id, 0, 0, 0, 2, 2, $Interval);
             IPS_SetEventActive($id, true);
         } else
         {
-            IPS_SetEventCyclic($id, 1, 0, 0, 0, 1, 1);
+            IPS_SetEventCyclic($id, 0, 0, 0, 2, 2, 1);
             IPS_SetEventActive($id, false);
         }
     }
@@ -251,7 +251,7 @@ protected function RegisterTimer($Name, $Interval, $Script)
         else
         {
             if ($Event['CyclicTimeValue'] <> $Interval)
-                IPS_SetEventCyclic($id, 1, 0, 0, 0, 1, $Interval);
+                IPS_SetEventCyclic($id, 0, 0, 0, 2, 2, $Interval);
                 IPS_SetEventCyclicTimeFrom($id, $startzeit_h, $startzeit_m, 0);
                 IPS_SetEventCyclicTimeTo($id, $stopzeit_h, $stopzeit_m, 0);
             if (!$Event['EventActive'])
