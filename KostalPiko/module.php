@@ -238,7 +238,7 @@ protected function RegisterTimer($Name, $Interval, $Script)
         }
     }
     
-    protected function SetTimerInterval($Name, $Interval)
+    protected function SetTimerInterval($Name, $Interval, $startzeith, $startzeitm)
     {
         $id = @IPS_GetObjectIDByIdent($Name, $this->InstanceID);
         if ($id === false)
@@ -255,7 +255,7 @@ protected function RegisterTimer($Name, $Interval, $Script)
         {
             if ($Event['CyclicTimeValue'] <> $Interval)
                 IPS_SetEventCyclic($id, 0, 0, 0, 2, 2, $Interval);
-                //IPS_SetEventCyclicTimeFrom($id, $startzeith, $startzeitm, 0);
+                IPS_SetEventCyclicTimeFrom($id, $startzeith, $startzeitm, 0);
                 //IPS_SetEventCyclicTimeTo($id, $stopzeith, $stopzeitm, 0);
             if (!$Event['EventActive'])
                 IPS_SetEventActive($id, true);
