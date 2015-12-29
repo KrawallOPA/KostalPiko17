@@ -57,7 +57,6 @@ class KostalPiko extends IPSModule
 		
 			
 			$url = $this->ReadPropertyString("url");
-			$refresh = $this->ReadPropertyString("refresh");
 			$Ausgabe = file_get_contents("$url", "r");
 			
                         //AC-Leistung_Aktuell
