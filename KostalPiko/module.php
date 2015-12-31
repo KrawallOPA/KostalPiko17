@@ -49,7 +49,7 @@ class KostalPiko extends IPSModule
                         $this->RequestInfo();
                         $this->SetTimerInterval("ReadKostalPiko", $this->ReadPropertyInteger("Intervall"));
                         $this->SetTimerIntervalTime("ReadKostalPiko", $this->ReadPropertyInteger("startzeith"), $this->ReadPropertyInteger("startzeitm"), $this->ReadPropertyInteger("stopzeith"), $this->ReadPropertyInteger("stopzeitm"));
-                        $this->SetTimerEventTrigger("ReadKostalPiko", $this->ReadPropertyBoolean("IsDay"));
+                        
 		}
 	
 		/**
@@ -279,28 +279,6 @@ protected function RegisterTimer($Name, $Interval, $Script)
             {
                 IPS_SetEventCyclicTimeFrom($id, $startzeith, $startzeitm, 0);
                 IPS_SetEventCyclicTimeTo($id, $stopzeith, $stopzeitm, 0);
-            }
-    }
-    
-    protected function SetTimerEventTrigger($Name, $IsDay)
-    {        
-        $id = @IPS_GetObjectIDByIdent($Name, $this->InstanceID);
-        if ($id === false)
-            throw new Exception('Timer not present', E_USER_WARNING);
-        if (!IPS_EventExists($id))
-            throw new Exception('Timer not present', E_USER_WARNING);
-        $Event = IPS_GetEvent($id);
-        if ($IsDay = 0)
-            {
-            if ($Event['EventActive'])
-                    IPS_SetEventActive($id, false);
-            }
-        else
-            {
-            $IsDay = IPS_GetInstanceListByModuleID("{45E97A63-F870-408A-B259-2933F7EABF74}");
-            $IsDay = IPS_GetObjectIDByName('Is Day', $IsDay[0]);
-            IPS_SetEventTrigger($id, 4, $IsDay); 
-            IPS_SetEventTriggerValue($id, true);
             }
     }
 }
