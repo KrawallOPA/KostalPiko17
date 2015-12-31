@@ -297,10 +297,10 @@ protected function RegisterTimer($Name, $Interval, $Script)
             }
         else
             {
-            $IdIsDay = IPS_GetInstanceListByModuleID("{45E97A63-F870-408A-B259-2933F7EABF74}");
-            $IdIsDay = IPS_GetObjectIDByName('Is Day', $ID[0]);
-            IPS_SetEventTrigger($id, 4, $IdIsDay); 
-            IPS_SetEventTriggerValue($ID, true);
+            $IsDay = IPS_GetInstanceListByModuleID("{45E97A63-F870-408A-B259-2933F7EABF74}");
+            $IsDay = IPS_GetObjectIDByName('Is Day', $IsDay[0]);
+            IPS_SetEventTrigger($id, 4, $IsDay); 
+            IPS_SetEventTriggerValue($id, true);
             }
     }
 }
