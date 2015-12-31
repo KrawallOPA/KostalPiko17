@@ -4,13 +4,13 @@
 		{ "name": "url", "type": "ValidationTextBox", "caption": "URL:" },
 		{ "type": "Label", "label": "Intervall für die Aktualisierung aller Daten:" },
                 { "type": "IntervalBox", "name": "Intervall", "caption": "Sekunden" },
-                { "type": "CheckBox", "name": "IsDay", "caption": "Verknüpfung mit Variable Location Modul Is Day"},
                 { "type": "Label", "label": "Intervall beginnend um hh:mm Uhr" },
                 { "type": "IntervalBox", "name": "startzeith", "caption": "Stunden" },
                 { "type": "IntervalBox", "name": "startzeitm", "caption": "Minuten" },
                 { "type": "Label", "label": "Intervall endend um hh:mm Uhr" },
                 { "type": "IntervalBox", "name": "stopzeith", "caption": "Stunden" },
-                { "type": "IntervalBox", "name": "stopzeitm", "caption": "Minuten" }
+                { "type": "IntervalBox", "name": "stopzeitm", "caption": "Minuten" },
+                { "type": "CheckBox", "name": "IsDay", "caption": "Verknüpfung mit Variable Location Modul Is Day"}
 	],
 	"actions":
 	[
