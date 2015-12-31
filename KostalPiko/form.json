@@ -4,7 +4,7 @@
 		{ "name": "url", "type": "ValidationTextBox", "caption": "URL:" },
 		{ "type": "Label", "label": "Intervall für die Aktualisierung aller Daten:" },
                 { "type": "IntervalBox", "name": "Intervall", "caption": "Sekunden" },
-                { "type": "Checkbox", "name": "IsDay", "caption": "Verknüpfung mit Location Modul <Is Day>"},
+                { "type": "CheckBox", "name": "IsDay", "caption": "Verknüpfung mit Variable Location Modul Is Day"},
                 { "type": "Label", "label": "Intervall beginnend um hh:mm Uhr" },
                 { "type": "IntervalBox", "name": "startzeith", "caption": "Stunden" },
                 { "type": "IntervalBox", "name": "startzeitm", "caption": "Minuten" },
