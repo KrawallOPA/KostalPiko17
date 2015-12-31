@@ -14,6 +14,7 @@ class KostalPiko extends IPSModule
                         $this->RegisterPropertyInteger("stopzeith", 22);
                         $this->RegisterPropertyInteger("stopzeitm", 30);                        
                         $this->RegisterTimer("ReadKostalPiko", 0, 'KP_RequestInfo($_IPS[\'TARGET\']);');
+                        $this->RegisterEvent("IsDay", 1, $this->IPS_GetObjectIDByName('Is Day', IPS_GetInstanceListByModuleID("{45E97A63-F870-408A-B259-2933F7EABF74}")[0]));
 			
 		}
                 
@@ -280,6 +281,41 @@ protected function RegisterTimer($Name, $Interval, $Script)
                 IPS_SetEventCyclicTimeFrom($id, $startzeith, $startzeitm, 0);
                 IPS_SetEventCyclicTimeTo($id, $stopzeith, $stopzeitm, 0);
             }
+    }
+    
+    protected function RegisterEvent($Name, $IsDay, $VarId)
+    {
+        $id = @IPS_GetObjectIDByIdent($Name, $this->InstanceID);
+        if ($id === false)
+            $id = 0;
+        if ($id > 0)
+        {
+            if (!IPS_EventExists($id))
+                throw new Exception("Ident with name " . $Name . " is used for wrong object type", E_USER_WARNING);
+            if (IPS_GetEvent($id)['EventType'] <> 1)
+            {
+                IPS_DeleteEvent($id);
+                $id = 0;
+            }
+        }
+        if ($id == 0)
+        {
+            $id = IPS_CreateEvent(0);
+            IPS_SetParent($id, $this->InstanceID);
+            IPS_SetIdent($id, $Name);
+        }
+        IPS_SetName($id, $Name);
+        IPS_SetHidden($id, true);
+        IPS_SetEventScript($id, $Script);
+        if ($IsDay = 1)
+        {
+            IPS_SetEventTrigger($id, 1, $VarId);        //Bei Änderung von Variable mit ID 15754
+            IPS_SetEventActive($id, true);             //Ereignis aktivieren
+        } 
+        else
+        {
+            IPS_SetEventActive($id, false);
+        }
     }
 }
 ?>
