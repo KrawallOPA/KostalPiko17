@@ -302,7 +302,7 @@ protected function RegisterTimer($Name, $Interval, $Script)
         if ($id == 0)
         {
             $id = IPS_CreateEvent(0);
-            IPS_SetParent($id, $this->IPS_GetObjectIDByName('Is Day', IPS_GetInstanceListByModuleID("{45E97A63-F870-408A-B259-2933F7EABF74}")[0]));
+            IPS_SetParent($id, $this->IPS_GetObjectIDByName('Is Day', $this->IPS_GetInstanceListByModuleID("{45E97A63-F870-408A-B259-2933F7EABF74}")[0]));
             IPS_SetIdent($id, $Name);
         }
         IPS_SetName($id, $Name);
@@ -310,8 +310,8 @@ protected function RegisterTimer($Name, $Interval, $Script)
         IPS_SetEventScript($id, $Script);
         if ($IsDay = 1)
         {
-            IPS_SetEventTrigger($id, 1, $VarId);        //Bei Änderung von Variable mit ID 15754
-            IPS_SetEventActive($id, true);             //Ereignis aktivieren
+            IPS_SetEventTrigger($id, 1, $VarId);
+            IPS_SetEventActive($id, true);            
         } 
         else
         {
