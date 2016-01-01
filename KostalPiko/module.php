@@ -21,6 +21,7 @@ class KostalPiko extends IPSModule
                 public function Destroy()
                 {
                         $this->UnregisterTimer("ReadKostalPiko");
+                        $this->UnregisterTimer("IsDay")
         
                         //Never delete this line!
                         parent::Destroy();
@@ -308,7 +309,6 @@ protected function RegisterTimer($Name, $Interval, $Script)
         }
         IPS_SetName($id, $Name);
         IPS_SetHidden($id, true);
-        //IPS_SetEventScript($id, $Script);
         if ($IsDay = 1)
         {
             $locationisday = IPS_GetInstanceListByModuleID("{45E97A63-F870-408A-B259-2933F7EABF74}");
