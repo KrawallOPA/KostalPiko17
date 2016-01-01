@@ -63,13 +63,9 @@ class KostalPiko extends IPSModule
 		{
                     $locationisday = IPS_GetInstanceListByModuleID("{45E97A63-F870-408A-B259-2933F7EABF74}");
                     $locationisday = IPS_GetObjectIDByName('Is Day', $locationisday[0]);
-                    if ($this->ReadPropertyBoolean("IsDay") = true)
-                        {
-                            if (GetValueBoolean($locationisday) = false)
-                                {
-                                    IPS_LogMessage($_IPS['SELF'], "Keine Abfrage !");                                    
-                                }
-                        }
+                    if ($this->ReadPropertyBoolean("IsDay") = true || GetValueBoolean($locationisday) = false)
+                        return;
+                        
                     else
                         {
 			$url = $this->ReadPropertyString("url");
