@@ -62,13 +62,14 @@ class KostalPiko extends IPSModule
 		*/
 		public function RequestInfo()
 		{
+                    $locationisday = IPS_GetInstanceListByModuleID("{45E97A63-F870-408A-B259-2933F7EABF74}");
+                    $locationisday = IPS_GetObjectIDByName('Is Day', $locationisday[0]);
                     if ($this->ReadPropertyBoolean("IsDay") = 1)
                         {
-                        $locationisday = IPS_GetInstanceListByModuleID("{45E97A63-F870-408A-B259-2933F7EABF74}");
-                        $locationisday = IPS_GetObjectIDByName('Is Day', $locationisday[0]);
+                        
                         if (GetValueBoolean($locationisday) = false)
                             {
-                                return true;
+                                print "Keine Abfrage !";
                             }
                         }
                     else
@@ -203,7 +204,7 @@ class KostalPiko extends IPSModule
                         $data1 = (float) $data;
                         SetValue($this->GetIDForIdent("L3Leistung"), $data1);
                         }
-                        return true;
+                        
                 }
                 
 protected function RegisterTimer($Name, $Interval, $Script)
