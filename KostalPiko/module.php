@@ -14,15 +14,13 @@ class KostalPiko extends IPSModule
                         $this->RegisterPropertyInteger("stopzeith", 22);
                         $this->RegisterPropertyInteger("stopzeitm", 30);                        
                         $this->RegisterTimer("ReadKostalPiko", 0, 'KP_RequestInfo($_IPS[\'TARGET\']);');
-                        $this->RegisterEvent("IsDay", "ReadKostalPiko", 1);
-			
+                        			
 		}
                 
                 public function Destroy()
                 {
                         $this->UnregisterTimer("ReadKostalPiko");
-                        $this->UnregisterTimer("IsDay");
-        
+                                
                         //Never delete this line!
                         parent::Destroy();
                 }
@@ -64,8 +62,17 @@ class KostalPiko extends IPSModule
 		*/
 		public function RequestInfo()
 		{
-		
-			
+                    if ($this->ReadPropertyBoolean("IsDay") = 1)
+                        {
+                        $locationisday = IPS_GetInstanceListByModuleID("{45E97A63-F870-408A-B259-2933F7EABF74}");
+                        $locationisday = IPS_GetObjectIDByName('Is Day', $locationisday[0]);
+                        if (GetValueBoolean($locationisday) = false)
+                            {
+                                return true;
+                            }
+                        }
+                    else
+                        {
 			$url = $this->ReadPropertyString("url");
 			$Ausgabe = file_get_contents("$url", "r");
 			
@@ -194,7 +201,9 @@ class KostalPiko extends IPSModule
                         $pos2 = strpos($Ausgabe,"</td>",$pos1+20);
                         $data = substr($Ausgabe,($pos1+66),$pos2-$pos1-66);
                         $data1 = (float) $data;
-                        SetValue($this->GetIDForIdent("L3Leistung"), $data1);                       
+                        SetValue($this->GetIDForIdent("L3Leistung"), $data1);
+                        }
+                        return true;
                 }
                 
 protected function RegisterTimer($Name, $Interval, $Script)
@@ -283,44 +292,6 @@ protected function RegisterTimer($Name, $Interval, $Script)
                 IPS_SetEventCyclicTimeFrom($id, $startzeith, $startzeitm, 0);
                 IPS_SetEventCyclicTimeTo($id, $stopzeith, $stopzeitm, 0);
             }
-    }
-    
-    protected function RegisterEvent($Name, $ParentName, $IsDay)
-    {
-        $Parent = IPS_GetObjectIDByIdent($ParentName, $this->InstanceID);
-        $id = @IPS_GetObjectIDByIdent($Name, $Parent);
-        if ($id === false)
-            $id = 0;
-        if ($id > 0)
-        {
-            if (!IPS_EventExists($id))
-                throw new Exception("Ident with name " . $Name . " is used for wrong object type", E_USER_WARNING);
-            if (IPS_GetEvent($id)['EventType'] <> 0)
-            {
-                IPS_DeleteEvent($id);
-                $id = 0;
-            }
-        }
-        if ($id == 0)
-        {
-            $id = IPS_CreateEvent(0);
-            IPS_SetIdent($id, $Name);            
-            IPS_SetParent($id, $Parent);
-        }
-        IPS_SetName($id, $Name);
-        IPS_SetHidden($id, true);
-        if ($IsDay = 1)
-        {
-            $locationisday = IPS_GetInstanceListByModuleID("{45E97A63-F870-408A-B259-2933F7EABF74}");
-            $locationisday = IPS_GetObjectIDByName('Is Day', $locationisday[0]);
-            IPS_SetEventTrigger($id, 4, $locationisday);
-            IPS_SetEventTriggerValue($id, true);
-            IPS_SetEventActive($id, true);            
-        } 
-        else
-        {
-            IPS_SetEventActive($id, false);
-        }
     }
 }
 ?>
