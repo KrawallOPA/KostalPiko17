@@ -302,7 +302,8 @@ protected function RegisterTimer($Name, $Interval, $Script)
         if ($id == 0)
         {
             $id = IPS_CreateEvent(0);
-            IPS_SetParent($id, $this->IPS_GetObjectIDByName('Is Day', $this->IPS_GetInstanceListByModuleID("{45E97A63-F870-408A-B259-2933F7EABF74}")[0]));
+            $VarId = $this->IPS_GetInstanceListByModuleID("{45E97A63-F870-408A-B259-2933F7EABF74}");
+            IPS_SetParent($id, $this->IPS_GetObjectIDByName('Is Day',$VarId[0]));
             IPS_SetIdent($id, $Name);
         }
         IPS_SetName($id, $Name);
