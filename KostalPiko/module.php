@@ -66,7 +66,6 @@ class KostalPiko extends IPSModule
                     $locationisday = IPS_GetObjectIDByName('Is Day', $locationisday[0]);
                     if ($this->ReadPropertyBoolean("IsDay") = 1)
                         {
-                        
                         if (GetValueBoolean($locationisday) = False)
                             {
                                 IPS_LogMessage($_IPS['SELF'], "Keine Abfrage !");
