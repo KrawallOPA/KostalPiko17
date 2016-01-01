@@ -8,7 +8,7 @@ class KostalPiko extends IPSModule
 			
 			$this->RegisterPropertyString("url", "http://pvserver:pvwr@192.168.178.60");
 			$this->RegisterPropertyInteger("Intervall", 10);
-                        $this->RegisterPropertyBoolean("IsDay", 1);
+                        $this->RegisterPropertyBoolean("IsDay", true);
                         $this->RegisterPropertyInteger("startzeith", 05);
                         $this->RegisterPropertyInteger("startzeitm", 00);
                         $this->RegisterPropertyInteger("stopzeith", 22);
@@ -63,9 +63,9 @@ class KostalPiko extends IPSModule
 		{
                     $locationisday = IPS_GetInstanceListByModuleID("{45E97A63-F870-408A-B259-2933F7EABF74}");
                     $locationisday = IPS_GetObjectIDByName('Is Day', $locationisday[0]);
-                    if ($this->ReadPropertyBoolean("IsDay") = 1)
+                    if ($this->ReadPropertyBoolean("IsDay") = true)
                         {
-                            if (GetValueBoolean($locationisday) = False)
+                            if (GetValueBoolean($locationisday) = false)
                                 {
                                 return;
                                     //IPS_LogMessage($_IPS['SELF'], "Keine Abfrage !");                                    
