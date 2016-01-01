@@ -286,7 +286,8 @@ protected function RegisterTimer($Name, $Interval, $Script)
     
     protected function RegisterEvent($Name, $ParentName, $IsDay)
     {
-        $id = @IPS_GetObjectIDByIdent($Name, $this->InstanceID);
+        $Parent = IPS_GetObjectIDByIdent($ParentName, $this->InstanceID);
+        $id = @IPS_GetObjectIDByIdent($Name, $Parent);
         if ($id === false)
             $id = 0;
         if ($id > 0)
@@ -302,9 +303,8 @@ protected function RegisterTimer($Name, $Interval, $Script)
         if ($id == 0)
         {
             $id = IPS_CreateEvent(0);
-            $Parent = IPS_GetObjectIDByIdent($ParentName, $this->InstanceID);
+            IPS_SetIdent($id, $Name);            
             IPS_SetParent($id, $Parent);
-            IPS_SetIdent($id, $Name);
         }
         IPS_SetName($id, $Name);
         IPS_SetHidden($id, true);
