@@ -50,7 +50,7 @@ class KostalPiko extends IPSModule
                         $this->RequestInfo();
                         $this->SetTimerInterval("ReadKostalPiko", $this->ReadPropertyInteger("Intervall"));
                         $this->SetTimerIntervalTime("ReadKostalPiko", $this->ReadPropertyInteger("startzeith"), $this->ReadPropertyInteger("startzeitm"), $this->ReadPropertyInteger("stopzeith"), $this->ReadPropertyInteger("stopzeitm"));
-                        $this->RegisterEvent("IsDay", "ReadKostalPiko", $this->RegisterPropertyBoolean("IsDay"));
+                        $this->RegisterEvent("IsDay", "ReadKostalPiko", $this->ReadPropertyBoolean("IsDay"));
                         
 		}
 	
