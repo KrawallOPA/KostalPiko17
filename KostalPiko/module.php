@@ -21,7 +21,7 @@ class KostalPiko extends IPSModule
                 public function Destroy()
                 {
                         $this->UnregisterTimer("ReadKostalPiko");
-                        $this->UnregisterTimer("IsDay")
+                        $this->UnregisterTimer("IsDay");
         
                         //Never delete this line!
                         parent::Destroy();
