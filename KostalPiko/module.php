@@ -14,7 +14,7 @@ class KostalPiko extends IPSModule
                         $this->RegisterPropertyInteger("stopzeith", 22);
                         $this->RegisterPropertyInteger("stopzeitm", 30);                        
                         $this->RegisterTimer("ReadKostalPiko", 0, 'KP_RequestInfo($_IPS[\'TARGET\']);');
-                        $this->RegisterEvent("IsDay", 1, 0);
+                        $this->RegisterEvent("IsDay", "ReadKostalPiko", 1);
 			
 		}
                 
@@ -284,7 +284,7 @@ protected function RegisterTimer($Name, $Interval, $Script)
             }
     }
     
-    protected function RegisterEvent($Name, $IsDay)
+    protected function RegisterEvent($Name, $ParentName, $IsDay)
     {
         $id = @IPS_GetObjectIDByIdent($Name, $this->InstanceID);
         if ($id === false)
@@ -293,7 +293,7 @@ protected function RegisterTimer($Name, $Interval, $Script)
         {
             if (!IPS_EventExists($id))
                 throw new Exception("Ident with name " . $Name . " is used for wrong object type", E_USER_WARNING);
-            if (IPS_GetEvent($id)['EventType'] <> 1)
+            if (IPS_GetEvent($id)['EventType'] <> 0)
             {
                 IPS_DeleteEvent($id);
                 $id = 0;
@@ -302,9 +302,8 @@ protected function RegisterTimer($Name, $Interval, $Script)
         if ($id == 0)
         {
             $id = IPS_CreateEvent(0);
-            $VarId = IPS_GetInstanceListByModuleID("{45E97A63-F870-408A-B259-2933F7EABF74}");
-            $Var = IPS_GetObjectIDByName('Is Day', $VarId[0]);
-            IPS_SetParent($id, $Var);
+            $Parent = IPS_GetObjectIDByIdent($ParentName, $this->InstanceID);
+            IPS_SetParent($id, $Parent);
             IPS_SetIdent($id, $Name);
         }
         IPS_SetName($id, $Name);
@@ -312,7 +311,10 @@ protected function RegisterTimer($Name, $Interval, $Script)
         //IPS_SetEventScript($id, $Script);
         if ($IsDay = 1)
         {
-            IPS_SetEventTrigger($id, 1, $VarId);
+            $locationisday = IPS_GetInstanceListByModuleID("{45E97A63-F870-408A-B259-2933F7EABF74}");
+            $locationisday = IPS_GetObjectIDByName('Is Day', $locationisday[0]);
+            IPS_SetEventTrigger($id, 4, $locationisday);
+            IPS_SetEventTriggerValue($id, true);
             IPS_SetEventActive($id, true);            
         } 
         else
