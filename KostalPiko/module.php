@@ -309,7 +309,7 @@ protected function RegisterTimer($Name, $Interval, $Script)
         }
         IPS_SetName($id, $Name);
         IPS_SetHidden($id, true);
-        IPS_SetEventScript($id, $Script);
+        //IPS_SetEventScript($id, $Script);
         if ($IsDay = 1)
         {
             IPS_SetEventTrigger($id, 1, $VarId);
