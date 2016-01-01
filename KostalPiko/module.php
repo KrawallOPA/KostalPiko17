@@ -49,8 +49,7 @@ class KostalPiko extends IPSModule
                         $this->RequestInfo();
                         $this->SetTimerInterval("ReadKostalPiko", $this->ReadPropertyInteger("Intervall"));
                         $this->SetTimerIntervalTime("ReadKostalPiko", $this->ReadPropertyInteger("startzeith"), $this->ReadPropertyInteger("startzeitm"), $this->ReadPropertyInteger("stopzeith"), $this->ReadPropertyInteger("stopzeitm"));
-                        
-                        
+                                                
 		}
 	
 		/**
@@ -64,7 +63,17 @@ class KostalPiko extends IPSModule
 		{
                     $locationisday = IPS_GetInstanceListByModuleID("{45E97A63-F870-408A-B259-2933F7EABF74}");
                     $locationisday = IPS_GetObjectIDByName('Is Day', $locationisday[0]);
-                    {
+                    if ($this->ReadPropertyBoolean("IsDay") = 1)
+                        {
+                        
+                        if (GetValueBoolean($locationisday) = False)
+                            {
+                                IPS_LogMessage($_IPS['SELF'], "Keine Abfrage !");
+                                return;
+                            }
+                        }
+                    else
+                        {
 			$url = $this->ReadPropertyString("url");
 			$Ausgabe = file_get_contents("$url", "r");
 			
