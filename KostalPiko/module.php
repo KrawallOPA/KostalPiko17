@@ -6,7 +6,7 @@ class KostalPiko extends IPSModule
 			//Never delete this line!
 			parent::Create();
 			
-			$this->RegisterPropertyString("url", "http://pvserver:pvwr@192.168.178.60");
+			$this->RegisterPropertyString("url", "http://pvserver:pvwr@192.168.180.60");
 			$this->RegisterPropertyInteger("Intervall", 10);
                         $this->RegisterPropertyBoolean("IsDay", true);
                         $this->RegisterPropertyInteger("startzeith", 05);
