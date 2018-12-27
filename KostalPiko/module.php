@@ -62,7 +62,7 @@ class KostalPiko extends IPSModule
 		public function RequestInfo()
 		{
                     $locationisday = IPS_GetInstanceListByModuleID("{45E97A63-F870-408A-B259-2933F7EABF74}");
-                    $locationisday = IPS_GetObjectIDByName('Ist es Tag', $locationisday[0]);
+                    $locationisday = IPS_GetObjectIDByIdent('IsDay', $locationisday[0]);
                     $IsDay = $this->ReadPropertyBoolean("IsDay");
                     if ($IsDay == true and GetValueBoolean($locationisday) == false)
                         return;                    
